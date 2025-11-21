@@ -55,16 +55,20 @@ backend/
 │   │   ├── patient.controller.js
 │   │   ├── provider.controller.js
 │   │   ├── goal.controller.js
+│   │   ├── appointment.controller.js
 │   │   └── public.controller.js
 │   ├── models/
 │   │   ├── User.model.js        # User schema
 │   │   ├── Profile.model.js     # Profile schema
-│   │   └── Goal.model.js        # Goal schema
+│   │   ├── Goal.model.js        # Goal schema
+│   │   ├── Appointment.model.js # Appointment schema
+│   │   └── Availability.model.js # Provider availability
 │   ├── routes/
 │   │   ├── auth.routes.js
 │   │   ├── patient.routes.js
 │   │   ├── provider.routes.js
 │   │   ├── goal.routes.js
+│   │   ├── appointment.routes.js
 │   │   └── public.routes.js
 │   ├── middleware/
 │   │   ├── auth.middleware.js   # JWT authentication
@@ -108,6 +112,23 @@ backend/
 ### Public Routes (no authentication)
 - `GET /api/public/health-info` - Get health information
 - `GET /api/public/privacy-policy` - Get privacy policy
+
+### Appointment Routes
+**Public:**
+- `GET /api/appointments/providers` - Get all providers
+
+**Patient Routes (requires patient role):**
+- `POST /api/appointments/book` - Book new appointment
+- `GET /api/appointments/patient/appointments` - Get patient's appointments
+- `PATCH /api/appointments/patient/:appointmentId/cancel` - Cancel appointment
+- `PATCH /api/appointments/patient/:appointmentId/reschedule` - Reschedule appointment
+
+**Provider Routes (requires provider role):**
+- `GET /api/appointments/provider/appointments` - Get provider's appointments
+- `PATCH /api/appointments/provider/:appointmentId/status` - Approve/reject appointment
+- `POST /api/appointments/provider/availability` - Set availability slot
+- `GET /api/appointments/provider/availability` - Get availability schedule
+- `DELETE /api/appointments/provider/availability/:availabilityId` - Remove availability slot
 
 ## 🔐 Authentication
 
@@ -178,6 +199,23 @@ curl -X POST http://localhost:5000/api/goals \
 - date
 - steps, sleep, water
 - notes
+
+### Appointment
+- patientId (reference to User)
+- providerId (reference to User)
+- appointmentDate
+- duration (minutes)
+- status (pending/approved/rejected/cancelled/completed)
+- reason
+- notes
+- rejectionReason
+
+### Availability
+- providerId (reference to User)
+- dayOfWeek (0-6, Sunday-Saturday)
+- startTime (HH:mm format)
+- endTime (HH:mm format)
+- isActive
 
 ## 🔒 Environment Variables
 

@@ -6,6 +6,7 @@ import patientRoutes from './routes/patient.routes.js';
 import providerRoutes from './routes/provider.routes.js';
 import goalRoutes from './routes/goal.routes.js';
 import publicRoutes from './routes/public.routes.js';
+import appointmentRoutes from './routes/appointment.routes.js';
 import { errorHandler } from './middleware/error.middleware.js';
 
 const app = express();
@@ -30,6 +31,7 @@ app.use('/api/patient', patientRoutes);
 app.use('/api/provider', providerRoutes);
 app.use('/api/goals', goalRoutes);
 app.use('/api/public', publicRoutes);
+app.use('/api/appointments', appointmentRoutes);
 
 // Error handling middleware (must be last)
 app.use(errorHandler);

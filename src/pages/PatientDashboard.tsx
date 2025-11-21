@@ -6,7 +6,9 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { toast } from "sonner";
-import { Activity, Droplet, Moon, LogOut, User } from "lucide-react";
+import { Activity, Droplet, Moon, LogOut } from "lucide-react";
+import AppointmentBooking from "@/components/AppointmentBooking";
+import AppointmentList from "@/components/AppointmentList";
 
 interface Goal {
   id: string;
@@ -69,9 +71,10 @@ const PatientDashboard = () => {
 
       <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
         <Tabs defaultValue="goals" className="space-y-6">
-          <TabsList className="grid w-full grid-cols-2 max-w-md">
-            <TabsTrigger value="goals">My Goals</TabsTrigger>
-            <TabsTrigger value="profile">Profile</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-3">
+            <TabsTrigger value="goals">Daily Goals</TabsTrigger>
+            <TabsTrigger value="appointments">My Appointments</TabsTrigger>
+            <TabsTrigger value="book">Book Appointment</TabsTrigger>
           </TabsList>
 
           <TabsContent value="goals" className="space-y-6">
@@ -176,27 +179,12 @@ const PatientDashboard = () => {
             </Card>
           </TabsContent>
 
-          <TabsContent value="profile">
-            <Card className="shadow-card">
-              <CardHeader>
-                <CardTitle>
-                  <User className="w-5 h-5 inline mr-2" />
-                  Profile Information
-                </CardTitle>
-                <CardDescription>Update your personal details</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-2">
-                  <Label htmlFor="profile-name">Full Name</Label>
-                  <Input id="profile-name" defaultValue="John Doe" />
-                </div>
-                <div className="space-y-2">
-                  <Label htmlFor="profile-email">Email</Label>
-                  <Input id="profile-email" type="email" defaultValue="john@example.com" />
-                </div>
-                <Button className="w-full">Update Profile</Button>
-              </CardContent>
-            </Card>
+          <TabsContent value="appointments">
+            <AppointmentList />
+          </TabsContent>
+
+          <TabsContent value="book">
+            <AppointmentBooking />
           </TabsContent>
         </Tabs>
       </main>
